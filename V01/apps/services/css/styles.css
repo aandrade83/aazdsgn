@@ -1,0 +1,10 @@
+/* Añadir estilos personalizados */
+.editable textarea {
+    width: 100%; /* El textarea ocupará todo el ancho del td */
+    height: 100%; /* El textarea ocupará todo el alto del td */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+    padding: 5px; /* Añadir padding para un mejor aspecto */
+    border: 1px solid #ccc; /* Añadir borde */
+    border-radius: 4px; /* Bordes redondeados */
+    resize: both; /* Permitir que el usuario redimensione el textarea */
+}
