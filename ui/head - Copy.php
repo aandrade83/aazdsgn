@@ -123,17 +123,86 @@ error_log("Request URI: " . $requestUri);
     </svg>
   </div>
   <div class="animsition">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.31/ua-parser.min.js"></script>
-
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.31/ua-parser.min.js"></script>
   <script>
-    window.IPGEOLOCATION_API_KEY = <?php echo json_encode(getenv('IPGEOLOCATION_API_KEY') ?: ''); ?>;
+     window.IPGEOLOCATION_API_KEY = <?php echo json_encode(getenv('IPGEOLOCATION_API_KEY') ?: ''); ?>;
   </script>
-
+ 
   <script>
-    window.onload = (event) => {
-      console.log('The page has fully loaded');
-      // load_main();
-    };
-  </script>
+window.onload = (event) => {
+  
+   console.log('The page has fully loaded');
+   
+   //   load_main();
 
-  <script src="js/visitor-tracking.js"></script>
+
+}
+
+
+
+function getDeviceInfo() {
+        const parser = new UAParser();
+        const result = parser.getResult();
+        return {
+            device: result.device.type || "desktop",
+            browser: result.browser.name + " " + result.browser.version
+        };
+    }
+
+    function getIp() {
+        return fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => data.ip);
+    }
+
+    function getCountry(ip, apiKey) {
+        return fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}&ip=${ip}`)
+            .then(response => response.json())
+            .then(data => data.country_name);
+    }
+
+    function sendVisitData() {
+        const apiKey = window.IPGEOLOCATION_API_KEY;
+         // Obtener la URL actual
+        const url = window.location.href;
+
+        getIp().then(ip => {
+            const deviceInfo = getDeviceInfo();
+            getCountry(ip, apiKey).then(country => {
+                const data = {
+                    ip: ip,
+                    pais: country,
+                    dispositivo: deviceInfo.device,
+                    navegador: deviceInfo.browser,
+                    url: url  // Incluir la URL en los datos
+                };
+                console.log(data);
+
+               var formData = new FormData();
+                formData.append('ip', data.ip);
+                formData.append('pais', data.pais);
+                formData.append('dispositivo', data.dispositivo );
+                formData.append('navegador', data.navegador );
+                formData.append('url', data.url );
+        
+                // Envía los datos a action.php usando fetch
+         fetch('<?php echo $base_url; ?>/process/actions/action.php', {
+            method: 'POST',
+            body: formData  
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response from server:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', sendVisitData);
+
+ </script>
