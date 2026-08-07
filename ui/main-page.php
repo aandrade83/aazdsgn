@@ -1,4 +1,4 @@
-  <?
+l  <?
    $main =  get_page_data(2,$lang,'descripcion');
    $total = count($main);
   
@@ -16,7 +16,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['428 x 428_1']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['428 x 428_1']->vars['text2'],450)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['428 x 428_1']->vars['link']?>"><? echo $main['428 x 428_1']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['428 x 428_1']->vars['link'])?>"><? echo $main['428 x 428_1']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>
@@ -34,7 +34,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['428 x 428_2']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['428 x 428_2']->vars['text2'],450)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['428 x 428_2']->vars['link']?>"><? echo $main['428 x 428_2']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['428 x 428_2']->vars['link'])?>"><? echo $main['428 x 428_2']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>
@@ -52,7 +52,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['428 x 428_3']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['428 x 428_3']->vars['text2'],450)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['428 x 428_3']->vars['link']?>"><? echo $main['428 x 428_3']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['428 x 428_3']->vars['link'])?>"><? echo $main['428 x 428_3']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>
@@ -70,7 +70,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['886 x 428_1']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['886 x 428_1']->vars['text2'],800)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['886 x 428_1']->vars['link']?>"><? echo $main['886 x 428_1']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['886 x 428_1']->vars['link'])?>"><? echo $main['886 x 428_1']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>
@@ -86,7 +86,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['428 x 886_1']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['428 x 886_1']->vars['text2'],400)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['428 x 886_1']->vars['link']?>"><? echo $main['428 x 886_1']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['428 x 886_1']->vars['link'])?>"><? echo $main['428 x 886_1']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>
@@ -102,7 +102,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['428 x 428_4']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['428 x 428_4']->vars['text2'],400)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['428 x 428_4']->vars['link']?>"><? echo $main['428 x 428_4']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['428 x 428_4']->vars['link'])?>"><? echo $main['428 x 428_4']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>
@@ -118,7 +118,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['886 x 428_2']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['886 x 428_2']->vars['text2'],400)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['886 x 428_2']->vars['link']?>"><? echo $main['886 x 428_2']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['886 x 428_2']->vars['link'])?>"><? echo $main['886 x 428_2']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>
@@ -134,7 +134,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['428 x 428_5']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['428 x 428_5']->vars['text2'],400)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['428 x 428_5']->vars['link']?>"><? echo $main['428 x 428_5']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['428 x 428_5']->vars['link'])?>"><? echo $main['428 x 428_5']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>
@@ -150,7 +150,7 @@
                 <div class="preview-card__content">
                   <h3 class="preview-card__heading"><? echo $main['428 x 428_6']->vars['text1']?></h3>
                   <div class="preview-card__text"><? echo text_preview($main['428 x 428_6']->vars['text2'],400)?></div>
-                  <a class="preview-card__btn link-arrow" href="<? echo $main['428 x 428_6']->vars['link']?>"><? echo $main['428 x 428_6']->vars['text3']?>
+                  <a class="preview-card__btn link-arrow" href="<? echo site_url($main['428 x 428_6']->vars['link'])?>"><? echo $main['428 x 428_6']->vars['text3']?>
                     <svg width="20" height="20">
                       <use xlink:href="#chevron-right"></use>
                     </svg>

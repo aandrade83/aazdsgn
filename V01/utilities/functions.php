@@ -587,4 +587,19 @@ function DebugLogTxt($texto, $array = null) {
 }
 
 
+function site_url($url) {
+    global $base_url;
+
+    if (empty($url)) {
+        return $url;
+    }
+
+    $productionUrl = 'https://aazdsgn.com';
+
+    if (strpos($url, $productionUrl) === 0) {
+        return $base_url . substr($url, strlen($productionUrl));
+    }
+
+    return $url;
+}
 ?>

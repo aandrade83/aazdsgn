@@ -17,18 +17,17 @@
            <? foreach ($main as $service) { ?>  
              
           
-           <div class="services-list__item service-card" data-aos="fade">
-              <div class="service-card__inner">
-                <div class="service-card__left">
-                  <div class="service-card__text"><? echo $service->vars['text2']?></div>
-                </div>
-                <div class="service-card__right">
+           <div class="services-list__item service-block" data-aos="fade">
+              <div class="service-block__header">
+                <span class="service-block__number"></span>
+                <h2 class="service-block__title"><? echo $service->vars['descripcion']?></h2>
+              </div>
+              <div class="service-block__line"></div>
+              <div class="service-block__body">
+                <div class="service-block__image">
                   <img src="<? echo $service->vars['url']?>" srcset="<? echo $service->vars['url2']?>" width="635" height="422" alt="<? echo $service->vars['text1']?>">
-                  <div class="service-card__detail">
-                    <h2 class="service-card__heading"><? echo $service->vars['descripcion']?></h2>
-                    
-                  </div>
                 </div>
+                <div class="service-block__description"><? echo $service->vars['text2']?></div>
               </div>
             </div>
           <? } ?>

@@ -6756,6 +6756,96 @@ textarea.custom-input {
   counter-reset: services;
 }
 
+/* Services page item layout: number + title header row, green accent line,
+   then a right-floated image with description text wrapping to its left and
+   expanding to full width once it runs taller than the image. Dedicated
+   classes (not .service-card, which ui/main-about.php's team-bio cards also
+   use) so no other page/section is affected. */
+.service-block {
+  counter-increment: services;
+}
+
+.service-block__header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Number: now the smaller of the pair (swapped with title). */
+.service-block__number {
+  font-family: "Gilroy", "Arial", sans-serif;
+  font-size: 40px;
+  line-height: 1.4;
+  color: #dcdcdc;
+  font-weight: 700;
+}
+
+.service-block__number::before {
+  content: "0" counter(services) ".";
+}
+
+/* Title: now the larger of the pair (swapped with number). */
+.service-block__title {
+  margin: 0;
+  font-family: "Gilroy", "Arial", sans-serif;
+  font-size: 50px;
+  line-height: 1;
+  color: #262626;
+  font-weight: 700;
+}
+
+/* Same green used by the original .service-card__left decorative border
+   (#BAD433, 4px), reused here as an accent line under the header — 5x its
+   previous length (80px -> 400px). */
+.service-block__line {
+  width: 400px;
+  max-width: 100%;
+  height: 0;
+  margin: 16px 0 24px;
+  border-top: solid 4px #BAD433;
+}
+
+/* Clearfix so the next .service-block starts below the floated image
+   instead of wrapping around it. */
+.service-block__body::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.service-block__image {
+  margin: 0 0 24px;
+}
+
+.service-block__image img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.service-block__description {
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+@media (min-width: 768px) {
+  .service-block__image {
+    float: right;
+    width: 40%;
+    max-width: 100%;
+    margin: 0 0 24px 32px;
+  }
+}
+
+@media (min-width: 992px) {
+  .service-block__description {
+    font-size: 20px;
+  }
+}
+
 @media (min-width: 1200px) {
   .services-list {
     margin-top: 110px;

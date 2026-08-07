@@ -12,7 +12,7 @@
           <span class="logo__small">Architecture studio</span>
         </a>
         <div class="container"></div>
-        <a class="header__phone" target="_blank" href="<? echo $menu[$total-1]->vars['link']?>"><? echo $menu[$total-1]->vars['descripcion']?></a>
+        <a class="header__phone" target="_blank" href="<? echo site_url($menu[$total-1]->vars['link'])?>"><? echo $menu[$total-1]->vars['descripcion']?></a>
         <!-- Burger-->
         <button class="header__menu-toggle menu-toggle" type="button">
           <span class="visually-hidden">Menu</span>
@@ -45,7 +45,7 @@
             <? if($i == $total -1){break;}?>
             <? //if ($i <> 1 ){ ?>
             <li class="navigation__item <? if($i==0){ ?> navigation__item--current <? } ?> ">
-            <a class="navigation__link" target="_self" href="<? echo $m->vars['link']?>"><? echo $m->vars['descripcion']?></a>
+            <a class="navigation__link" target="_self" href="<? echo site_url($m->vars['link'])?>"><? echo $m->vars['descripcion']?></a>
             </li>
            <? //} ?>
 
