@@ -1,5 +1,9 @@
 Options -Indexes
 
+ErrorDocument 404 /errors/404.php
+ErrorDocument 403 /errors/403.php
+ErrorDocument 500 /errors/500.php
+
 # --- Block dotfiles (.env, .git/*, .htaccess, .claude, etc.) ---
 <FilesMatch "^\.(?!well-known)">
   Require all denied
