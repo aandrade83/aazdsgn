@@ -1,6 +1,35 @@
+Options -Indexes
+
+# --- Block dotfiles (.env, .git/*, .htaccess, .claude, etc.) ---
+<FilesMatch "^\.(?!well-known)">
+  Require all denied
+</FilesMatch>
+
+# --- Block infra/config/secret-adjacent files served from the document root ---
+<FilesMatch "^(docker-compose\.ya?ml|Dockerfile|composer\.(json|lock)|package(-lock)?\.json|README\.md)$">
+  Require all denied
+</FilesMatch>
+
+# --- Block sensitive file extensions anywhere in the tree ---
+<FilesMatch "\.(sql|zip|rar|bak|log)$">
+  Require all denied
+</FilesMatch>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # --- Block internal folders from direct web access ---
+  RewriteRule ^\.git(/|$) - [F,L]
+  RewriteRule ^V01/utilities(/|$) - [F,L]
+  RewriteRule ^ui/ - [F,L]
+  RewriteRule ^docs/ - [F,L]
+  RewriteRule ^_unused_review/ - [F,L]
+  RewriteRule ^\.claude/ - [F,L]
+
+  # --- Lock down /process/ to the endpoints actually used by the public site ---
+  RewriteRule ^process/actions/(mail|action)\.php$ - [L]
+  RewriteRule ^process/ - [F,L]
 
   # 1. Redirect old public .php URLs to their clean equivalents (301)
   RewriteCond %{THE_REQUEST} \s/+(about|projects|services|contact)\.php[?\s] [NC]

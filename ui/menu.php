@@ -54,7 +54,7 @@
         </ul>
       </nav>
       <div class="mobile-canvas__bottom">
-        <a class="mobile-canvas__phone" href="<? echo $menu[$total]->vars['link']?>"><? echo $menu[$total]->vars['descripcion']?></a>
+        <a class="mobile-canvas__phone" href="<? echo $menu[$total-1]->vars['link']?>"><? echo $menu[$total-1]->vars['descripcion']?></a>
         <div class="mobile-canvas__copy">
           © 2021 <span>AAZDSGN</span> All Rights Reserved.
           <br>Development by <span>AAZDSGN</span>
