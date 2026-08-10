@@ -22,7 +22,8 @@
  
       <img src="<?php echo $main['MAIN']->vars['url']; ?>"
            srcset="<?php echo $main['MAIN']->vars['url2']; ?>"
-           width="1800" height="768" alt="">
+           width="1800" height="768"
+           alt="<?php echo ($lang == '_en') ? 'Residential architecture and creative design in Costa Rica' : 'Arquitectura residencial y diseño creativo en Costa Rica'; ?>">
     </div>
 
     <!-- Kill-switch SOLO para este bloque -->
@@ -119,7 +120,7 @@
             <?php echo nl2br(htmlspecialchars($main['MAIN']->vars['text2'])); ?>
         </p>
         <div style="text-align: center;">
-          <img src="/img/ucr-tec.png" alt="">
+          <img src="/img/ucr-tec.png" alt="Universidad de Costa Rica y Tecnológico de Costa Rica">
         </div>
 
         </header>
