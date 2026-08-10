@@ -1,5 +1,6 @@
   <?
    $menu =  get_page_data(1,$lang);
+   
    $total = count($menu);
   
   ?>

@@ -11,21 +11,29 @@ error_log("Request URI: " . $requestUri);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2">
   <!-- CSS-->
-  <link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-  <link rel="manifest" href="favicons/site.webmanifest">
-  <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="apple-touch-icon" sizes="60x60" href="<?php echo $base_url; ?>/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $base_url; ?>/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $base_url; ?>/favicons/favicon-16x16.png">
+  <link rel="manifest" href="<?php echo $base_url; ?>/favicons/site.webmanifest">
+  <link rel="mask-icon" href="<?php echo $base_url; ?>/favicons/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
-  <link rel="stylesheet" href="css/bootstrap-grid.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="<?php echo $base_url; ?>/css/bootstrap-grid.css">
+  <link rel="stylesheet" href="<?php echo $base_url; ?>/css/main.css">
   <title>AAZDSGN - Arquitectura Creativa en Costa Rica</title>
   <meta name="description" content="Estudio de arquitectura en Costa Rica especializado en diseño residencial, comercial y sostenible. Cotizá con expertos locales.">
   <meta name="keywords" content="arquitectura Costa Rica, arquitectos en Costa Rica, diseño arquitectónico, planos, construcción, San José">
   <meta name="author" content="Alejandra Arce">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="<?php echo $base_url; ?>/" />
+  <?php
+    $canonical_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if ($canonical_path === '' || $canonical_path === '/index.php') {
+      $canonical_path = '/';
+    }
+  ?>
+  <link rel="canonical" href="<?php echo $base_url . $canonical_path; ?>" />
+  <link href="<?php echo $base_url; ?>/V01/assets/libs/sweetalert2/sweetalert2.min.css?v=<?php echo $v;?>"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <script type="application/ld+json">
@@ -65,6 +73,9 @@ error_log("Request URI: " . $requestUri);
       <symbol id="instagram" viewBox="0 0 64 64">
         <path d="M32 16.9c-8.3 0-15 6.8-15 15.1s6.7 15.1 15 15.1S47 40.3 47 32s-6.7-15.1-15-15.1zm0 25.2c-5.5 0-10-4.5-10-10.1s4.5-10.1 10-10.1S42 26.4 42 32s-4.5 10.1-10 10.1zM47 10c-2.8 0-5 2.3-5 5s2.2 5 5 5 5-2.3 5-5-2.2-5-5-5z" />
         <path d="M48 0H16C7.2 0 0 7.2 0 16v31.7C0 56.7 7.3 64 16.3 64h31.5C56.7 64 64 56.7 64 47.7V16c0-8.8-7.2-16-16-16zm11 47.7C59 53.9 54 59 47.8 59H16.3C10.1 59 5 54 5 47.8V16C5 9.9 9.9 5 16 5h32c6.1 0 11 4.9 11 11v31.7z" />
+      </symbol>
+      <symbol id="whatsapp" viewBox="0 0 64 64">
+        <path d="M32 0C14.4 0 0 14.4 0 32c0 5.6 1.5 11.1 4.3 15.9L0 64l16.4-4.3c4.6 2.5 9.8 3.9 15.1 3.9h.1c17.6 0 32-14.4 32-32C63.6 14.4 49.6 0 32 0zm0 58.5h-.1c-4.7 0-9.3-1.3-13.3-3.6l-1-.6-9.7 2.6 2.6-9.5-.6-1C7.6 42.3 6 37.2 6 32 6 17.7 17.7 6 32 6s26 11.7 26 26-11.7 26.5-26 26.5zm14.3-19.5c-.8-.4-4.6-2.3-5.3-2.5-.7-.3-1.2-.4-1.7.4-.5.8-2 2.5-2.4 3-.4.5-.9.5-1.7.2-.8-.4-3.3-1.2-6.3-3.9-2.3-2.1-3.9-4.6-4.4-5.4-.5-.8 0-1.2.3-1.6.4-.4.8-.9 1.2-1.4.4-.5.5-.8.8-1.4.3-.5.1-1-.1-1.4-.2-.4-1.7-4.1-2.3-5.6-.6-1.5-1.2-1.3-1.7-1.3-.4 0-.9-.1-1.4-.1s-1.4.2-2.1.9c-.7.8-2.7 2.7-2.7 6.5 0 3.8 2.8 7.5 3.2 8 .4.5 5.5 8.4 13.3 11.8 1.9.8 3.3 1.3 4.5 1.6 1.9.6 3.6.5 4.9.3 1.5-.2 4.6-1.9 5.3-3.7.7-1.8.7-3.3.5-3.7-.2-.4-.7-.6-1.5-1z" />
       </symbol>
       <symbol id="chevron-left" viewBox="0 0 64 64">
         <path d="M21.1 32L47.2 4.5c1.1-1.1 1.1-2.7 0-3.7s-2.7-1.1-3.7 0L17.4 28.5c-1.9 1.9-1.9 5.1 0 6.9l26.1 27.7c.5.5 1.3.8 1.9.8.5 0 1.3-.3 1.9-.8 1.1-1.1 1.1-2.7 0-3.7L21.1 32z" />
@@ -136,4 +147,4 @@ error_log("Request URI: " . $requestUri);
     };
   </script>
 
-  <script src="js/visitor-tracking.js"></script>
+  <script src="<?php echo $base_url; ?>/js/visitor-tracking.js"></script>

@@ -28,7 +28,7 @@
             <? $img = get_projects_images_custom($proyect->vars['id'],'image5');
             ?>     
             <li class="projects-masonry__item col-12 col-md-6 col-xl-3 __js_masonry-item __js_<? echo $proyect->vars['cat']?>">
-              <a class="card card--small card--masonry" href="<?php echo $base_url; ?>/projects-detail.php?id=<? echo $proyect->vars['id'] ?>">
+              <a class="card card--small card--masonry" href="<?php echo $base_url; ?>/projects/<? echo $proyect->vars['id'] ?>">
                 <div class="card__image">
                   <img src="<? echo str_replace(' ','%20',$img->vars['url'])?>" srcset="<?  echo str_replace(' ','%20',$img->vars['url2'])?> 2x" width="428" height="428" alt=""  loading="lazy">
                 </div>

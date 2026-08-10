@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /V01/
+Disallow: /process/
+Disallow: /php/
+Disallow: /ui/
+Disallow: /utilities/
+Disallow: /_unused_review/
+Disallow: /.claude/
+
+Sitemap: https://aazdsgn.com/sitemap.xml

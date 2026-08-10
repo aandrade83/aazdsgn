@@ -92,6 +92,11 @@
     padding-bottom: 20px !important; /* ajustable */
 }
 
+/* 🔥 reduce el espacio bajo la imagen de #about-top (antes de "Nuestro equipo") */
+#about-top .about-block__header {
+    margin-bottom: 0 !important;
+}
+
 /* 🔥 controla el texto */
 #about-top p {
     margin-top: 0 !important;
@@ -113,6 +118,10 @@
           <p>
             <?php echo nl2br(htmlspecialchars($main['MAIN']->vars['text2'])); ?>
         </p>
+        <div style="text-align: center;">
+          <img src="/img/ucr-tec.png" alt="">
+        </div>
+
         </header>
         
       </div>

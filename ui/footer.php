@@ -17,11 +17,10 @@
           </div>
           <div class="footer__column col-6 col-sm">
             <ul class="footer__column-menu">
-              <? /*
               <li class="footer__column-item">
-                <a class="footer__column-link animsition-link" href="#">Site Map</a>
+                <a class="footer__column-link" href="<?php echo $base_url; ?>/sitemap.xml">Site Map</a>
               </li>
-              
+              <? /*
               <li class="footer__column-item">
                 <a class="footer__column-link animsition-link" href="#">Terms &amp; Conditions</a>
               </li>
@@ -119,17 +118,17 @@
     </section>
   </div>
   <!-- Optional JavaScript-->
-  <script src="js/jquery-3.5.1.min.js"></script>
-  <script src="js/jquery.fancybox.min.js"></script>
-  <script src="js/jquery.pagepiling.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.easy_number_animate.js"></script>
-  <script src="js/isotope.pkgd.min.js"></script>
-  <script src="js/packery-mode.pkgd.min.js"></script>
-  <script src="js/swiper-bundle.min.js"></script>
-  <script src="js/animsition.min.js"></script>
+  <script src="<?php echo $base_url; ?>/js/jquery-3.5.1.min.js"></script>
+  <script src="<?php echo $base_url; ?>/js/jquery.fancybox.min.js"></script>
+  <script src="<?php echo $base_url; ?>/js/jquery.pagepiling.js"></script>
+  <script src="<?php echo $base_url; ?>/js/aos.js"></script>
+  <script src="<?php echo $base_url; ?>/js/jquery.easy_number_animate.js"></script>
+  <script src="<?php echo $base_url; ?>/js/isotope.pkgd.min.js"></script>
+  <script src="<?php echo $base_url; ?>/js/packery-mode.pkgd.min.js"></script>
+  <script src="<?php echo $base_url; ?>/js/swiper-bundle.min.js"></script>
+  <script src="<?php echo $base_url; ?>/js/animsition.min.js"></script>
   <!-- JavaScript-->
-  <script src="js/main.js"></script>
+  <script src="<?php echo $base_url; ?>/js/main.js"></script>
 
 </body>
 

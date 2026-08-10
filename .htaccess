@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Redirect old public .php URLs to their clean equivalents (301)
+  RewriteCond %{THE_REQUEST} \s/+(about|projects|services|contact)\.php[?\s] [NC]
+  RewriteRule ^(about|projects|services|contact)\.php$ /$1 [R=301,L]
+
+  RewriteCond %{THE_REQUEST} \s/+projects-detail\.php\?id=([0-9]+)\s [NC]
+  RewriteRule ^projects-detail\.php$ /projects/%1? [R=301,L]
+
+  # 2. Serve existing files/directories as-is (assets, /process/actions/mail.php, etc.)
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 3. Map clean URLs to the internal PHP files
+  RewriteRule ^about/?$ about.php [L]
+  RewriteRule ^projects/?$ projects.php [L]
+  RewriteRule ^services/?$ services.php [L]
+  RewriteRule ^contact/?$ contact.php [L]
+  RewriteRule ^projects/([0-9]+)/?$ projects-detail.php?id=$1 [L,QSA]
+</IfModule>
