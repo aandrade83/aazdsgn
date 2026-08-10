@@ -7,6 +7,12 @@ l  <?
       <div class="projects-masonry projects-masonry--pt">
         <div class="projects-masonry__inner container">
           <h1 class="visually-hidden"><?php echo $lang === '_en' ? 'Architecture, design and construction in Costa Rica' : 'Arquitectura, diseño y construcción en Costa Rica'; ?></h1>
+          <p class="article__header-text" style="max-width: 900px; margin: 0 auto 48px; text-align: justify; font-size: 18px; line-height: 1.7;">
+            <strong class="color-yellow" style="font-size: 1.3em;">AAZ DSGN</strong>
+            <?php echo $lang === '_en'
+              ? " develops architecture, design, and construction projects in Costa Rica with a personalized, functional, and wellbeing-centered approach. We integrate creativity, technical expertise, and contemporary principles such as neuroarchitecture to design homes, renovations, and spaces that respond to real life, natural light, the surrounding environment, and each client's needs."
+              : ' desarrolla proyectos de arquitectura, diseño y construcción en Costa Rica con una visión personalizada, funcional y sensible al bienestar de quienes habitan cada espacio. Integramos creatividad, criterio técnico y principios contemporáneos como la neuroarquitectura para diseñar hogares, remodelaciones y espacios que respondan a la vida real, la luz natural, la conexión con el entorno y las necesidades de cada cliente.'; ?>
+          </p>
           <div class="row __js_projects-grid">
            <? // 428 x 428_1 ?>
             <div class="projects-masonry__item __js_masonry-item  col-12 col-md-6 col-lg-4 col-xl-3" data-order="1" data-aos="fade">
