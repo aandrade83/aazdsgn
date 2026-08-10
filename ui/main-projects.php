@@ -9,7 +9,7 @@
       <article class="article">
         <header class="article__header">
           <div class="container">
-            <!-- <h1 class="article__heading heading heading--size-large"></h1> -->
+            <h1 class="article__heading heading heading--size-large"><?php echo $lang === '_en' ? 'Projects' : 'Proyectos'; ?></h1>
             <!-- Filter projects-->
             <div class="article__filter filter">
               <button class="filter__item filter__item--active __js_filter-btn" data-idcat="0" type="button" data-filter="*">all</button>

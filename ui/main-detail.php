@@ -1,7 +1,7 @@
 <?
   
-   $id = param('id'); 
-  $proyect = get_project($id,$lang);
+   $id = param('id');
+  if (!isset($proyect) || !$proyect) { $proyect = get_project($id,$lang); }
   $categories = get_page_data(3,$lang,'id');
   $services = get_page_data(4,$lang,'id');
   $images = get_projects_images($id);

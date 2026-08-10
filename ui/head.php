@@ -20,8 +20,14 @@ error_log("Request URI: " . $requestUri);
   <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="<?php echo $base_url; ?>/css/bootstrap-grid.css">
   <link rel="stylesheet" href="<?php echo $base_url; ?>/css/main.css">
-  <title>AAZDSGN - Arquitectura Creativa en Costa Rica</title>
-  <meta name="description" content="Estudio de arquitectura en Costa Rica especializado en diseño residencial, comercial y sostenible. Cotizá con expertos locales.">
+  <?php
+    $page_title       = isset($page_title) && $page_title !== '' ? $page_title : 'AAZDSGN - Arquitectura Creativa en Costa Rica';
+    $page_description = isset($page_description) && $page_description !== '' ? $page_description : 'Estudio de arquitectura en Costa Rica especializado en diseño residencial, comercial y sostenible. Cotizá con expertos locales.';
+    $og_type          = isset($og_type) && $og_type !== '' ? $og_type : 'website';
+    $og_image         = isset($og_image) && $og_image !== '' ? $og_image : $base_url . '/img/AAZ%20design.png';
+  ?>
+  <title><?php echo $page_title; ?></title>
+  <meta name="description" content="<?php echo htmlspecialchars($page_description, ENT_QUOTES); ?>">
   <meta name="keywords" content="arquitectura Costa Rica, arquitectos en Costa Rica, diseño arquitectónico, planos, construcción, San José">
   <meta name="author" content="Alejandra Arce">
   <meta name="robots" content="index, follow">
@@ -32,6 +38,15 @@ error_log("Request URI: " . $requestUri);
     }
   ?>
   <link rel="canonical" href="<?php echo $base_url . $canonical_path; ?>" />
+  <meta property="og:title" content="<?php echo htmlspecialchars($page_title, ENT_QUOTES); ?>">
+  <meta property="og:description" content="<?php echo htmlspecialchars($page_description, ENT_QUOTES); ?>">
+  <meta property="og:url" content="<?php echo $base_url . $canonical_path; ?>">
+  <meta property="og:type" content="<?php echo htmlspecialchars($og_type, ENT_QUOTES); ?>">
+  <meta property="og:image" content="<?php echo $og_image; ?>">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<?php echo htmlspecialchars($page_title, ENT_QUOTES); ?>">
+  <meta name="twitter:description" content="<?php echo htmlspecialchars($page_description, ENT_QUOTES); ?>">
+  <meta name="twitter:image" content="<?php echo $og_image; ?>">
   <link href="<?php echo $base_url; ?>/V01/assets/libs/sweetalert2/sweetalert2.min.css?v=<?php echo $v;?>"/>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>

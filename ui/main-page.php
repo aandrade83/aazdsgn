@@ -6,6 +6,7 @@ l  <?
     <main>
       <div class="projects-masonry projects-masonry--pt">
         <div class="projects-masonry__inner container">
+          <h1 class="visually-hidden"><?php echo $lang === '_en' ? 'Architecture, design and construction in Costa Rica' : 'Arquitectura, diseño y construcción en Costa Rica'; ?></h1>
           <div class="row __js_projects-grid">
            <? // 428 x 428_1 ?>
             <div class="projects-masonry__item __js_masonry-item  col-12 col-md-6 col-lg-4 col-xl-3" data-order="1" data-aos="fade">

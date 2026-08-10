@@ -36,6 +36,9 @@ ErrorDocument 500 /errors/500.php
   RewriteRule ^process/ - [F,L]
 
   # 1. Redirect old public .php URLs to their clean equivalents (301)
+  RewriteCond %{THE_REQUEST} \s/+index\.php[?\s] [NC]
+  RewriteRule ^index\.php$ / [R=301,L]
+
   RewriteCond %{THE_REQUEST} \s/+(about|projects|services|contact)\.php[?\s] [NC]
   RewriteRule ^(about|projects|services|contact)\.php$ /$1 [R=301,L]
 
