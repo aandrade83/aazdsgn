@@ -5,7 +5,7 @@ $requestUri = $_SERVER['REQUEST_URI'];
 error_log("Request URI: " . $requestUri);
 ?>
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="<?php echo ($lang == '_en') ? 'en' : 'es'; ?>">
 
 <head>
   <meta charset="UTF-8">
