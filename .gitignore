@@ -11,6 +11,7 @@ Thumbs.db
 
 *.log
 *.tmp
+V01/LogFile.txt
 
 *.sql
 *.sql.gz

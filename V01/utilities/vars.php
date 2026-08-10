@@ -2,8 +2,10 @@
 if(session_status() == PHP_SESSION_NONE) { session_start(); }
 date_default_timezone_set("America/Chicago");
 
-$base_url     = 'http://localhost:8083';
-$base_img_url = 'http://localhost:8083';
+$is_https     = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+|| (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+$base_url     = ($is_https ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+$base_img_url = $base_url;
 $v            = '1';
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED );
