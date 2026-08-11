@@ -19,7 +19,19 @@
    $str_services = "SERVICES PROVIDED";
   }
 
-  
+  $projectTitle = trim($proyect->vars['titulo'] ?? '');
+  $imageAlts = array();
+  foreach (array('image1','image2','image3','image4','image5') as $imgKey) {
+    $imageName = isset($images[$imgKey]) ? trim($images[$imgKey]->vars['nombre'] ?? '') : '';
+    if ($imageName !== '') {
+      $altText = $projectTitle . ' - ' . $imageName;
+    } else {
+      $altText = ($lang === '_en')
+        ? 'AAZ DSGN project ' . $projectTitle
+        : 'Proyecto ' . $projectTitle . ' de AAZ DSGN';
+    }
+    $imageAlts[$imgKey] = htmlspecialchars($altText, ENT_QUOTES, 'UTF-8');
+  }
 
 ?>
 
@@ -50,7 +62,7 @@
           </div>
         </header>
         <div class="article__project-hero" data-aos="fade">
-          <img src="<? echo $images['image1']->vars['url']?>" srcset="<? echo $images['image1']->vars['url2']?> 2x" width="1800" height="768" alt="Villa near Moscow photo">
+          <img src="<? echo $images['image1']->vars['url']?>" srcset="<? echo $images['image1']->vars['url2']?> 2x" width="1800" height="768" alt="<? echo $imageAlts['image1']; ?>">
         </div>
         <div class="container">
           <div class="article__project-text" data-aos="fade">
@@ -63,16 +75,16 @@
         <div class="article__project-images container">
           <div class="row">
             <div class="col-12 col-md-6" data-aos="fade">
-              <img src="<? echo $images['image2']->vars['url']?>" srcset="<? echo $images['image2']->vars['url2']?> 2x" width="886" height="886" alt="">
+              <img src="<? echo $images['image2']->vars['url']?>" srcset="<? echo $images['image2']->vars['url2']?> 2x" width="886" height="886" alt="<? echo $imageAlts['image2']; ?>">
             </div>
             <div class="article__project-images-cell col-12 col-md-6" data-aos="fade">
-              <img src="<? echo $images['image3']->vars['url']?>" srcset="<? echo $images['image3']->vars['url2']?> 2x" width="886" height="428" alt="">
+              <img src="<? echo $images['image3']->vars['url']?>" srcset="<? echo $images['image3']->vars['url2']?> 2x" width="886" height="428" alt="<? echo $imageAlts['image3']; ?>">
               <div class="row">
                 <div class="article__project-images-cell col-12 col-md-6" data-aos="fade">
-                  <img src="<? echo $images['image4']->vars['url']?>" srcset="<? echo $images['image4']->vars['url2']?> 2x" width="428" height="428" alt="">
+                  <img src="<? echo $images['image4']->vars['url']?>" srcset="<? echo $images['image4']->vars['url2']?> 2x" width="428" height="428" alt="<? echo $imageAlts['image4']; ?>">
                 </div>
                 <div class="article__project-images-cell col-12 col-md-6" data-aos="fade">
-                  <img src="<? echo $images['image5']->vars['url']?>" srcset="<? echo $images['image5']->vars['url2']?> 2x" width="428" height="428" alt="">
+                  <img src="<? echo $images['image5']->vars['url']?>" srcset="<? echo $images['image5']->vars['url2']?> 2x" width="428" height="428" alt="<? echo $imageAlts['image5']; ?>">
                 </div>
               </div>
             </div>

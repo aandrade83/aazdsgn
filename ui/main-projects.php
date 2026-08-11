@@ -30,7 +30,21 @@
             <li class="projects-masonry__item col-12 col-md-6 col-xl-3 __js_masonry-item __js_<? echo $proyect->vars['cat']?>">
               <a class="card card--small card--masonry" href="<?php echo $base_url; ?>/projects/<? echo $proyect->vars['id'] ?>">
                 <div class="card__image">
-                  <img src="<? echo str_replace(' ','%20',$img->vars['url'])?>" srcset="<?  echo str_replace(' ','%20',$img->vars['url2'])?> 2x" width="428" height="428" alt=""  loading="lazy">
+                 <?php
+  $projectTitle = trim($proyect->vars['titulo'] ?? '');
+  $imageName = trim($img->vars['nombre'] ?? '');
+
+  $altText = $imageName !== ''
+    ? $projectTitle . ' - ' . $imageName
+    : 'Proyecto ' . $projectTitle . ' de AAZ DSGN';
+?>
+  <img 
+    src="<?php echo str_replace(' ','%20',$img->vars['url']); ?>" 
+    srcset="<?php echo str_replace(' ','%20',$img->vars['url2']); ?> 2x" 
+    width="428" 
+    height="428" 
+    alt="<?php echo htmlspecialchars($altText, ENT_QUOTES, 'UTF-8'); ?>"  
+    loading="lazy">
                 </div>
                 <div class="card__content">
                   <h3 class="card__heading"><? echo $proyect->vars['titulo']?></h3>
