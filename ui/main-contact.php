@@ -2,7 +2,7 @@
       <article class="article">
         <header class="article__header">
           <div class="container">
-            <h1 class="article__heading heading heading--size-large">Contact</h1>
+            <h1 class="article__heading heading heading--size-large"><?php echo $lang === '_en' ? 'Contact' : 'Contacto'; ?></h1>
           </div>
         </header>
         <div class="article__map map">
@@ -67,27 +67,33 @@
             <? } ?>
             <form id="contactForm" class="js-form-validate" action="<?php echo $base_url; ?>/process/actions/mail.php" method="POST">
               <div class="row">
+                <?php
+                  $i18n_name    = $lang === '_en' ? 'Name' : 'Nombre';
+                  $i18n_email   = 'Email*';
+                  $i18n_subject = $lang === '_en' ? 'Subject' : 'Asunto';
+                  $i18n_message = $lang === '_en' ? 'Message*' : 'Mensaje*';
+                ?>
                 <div class="feedback__field-wrapper col-12 col-md-6 col-lg-4" data-aos="fade">
-                  <label class="field" aria-label="Name">
-                    <input type="text" name="name" placeholder="Name">
+                  <label class="field" for="contact-name" aria-label="<?php echo $i18n_name; ?>">
+                    <input id="contact-name" type="text" name="name" placeholder="<?php echo $i18n_name; ?>">
                   </label>
                   <div class="field-error" style="display: none"></div>
                 </div>
                 <div class="feedback__field-wrapper col-12 col-md-6 col-lg-4" data-aos="fade">
-                  <label class="field" aria-label="Email">
-                    <input type="email" name="email" placeholder="Email*" required>
+                  <label class="field" for="contact-email" aria-label="<?php echo $i18n_email; ?>">
+                    <input id="contact-email" type="email" name="email" placeholder="<?php echo $i18n_email; ?>" required>
                   </label>
                   <div class="field-error" style="display: none"></div>
                 </div>
                 <div class="feedback__field-wrapper col-12 col-lg-4" data-aos="fade">
-                  <label class="field" aria-label="Subject">
-                    <input type="text" name="subject" placeholder="Subject">
+                  <label class="field" for="contact-subject" aria-label="<?php echo $i18n_subject; ?>">
+                    <input id="contact-subject" type="text" name="subject" placeholder="<?php echo $i18n_subject; ?>">
                   </label>
                   <div class="field-error" style="display: none"></div>
                 </div>
                 <div class="feedback__field-wrapper col-12" data-aos="fade">
-                  <label class="field" aria-label="message">
-                    <textarea name="message" placeholder="Message*" required></textarea>
+                  <label class="field" for="contact-message" aria-label="<?php echo $i18n_message; ?>">
+                    <textarea id="contact-message" name="message" placeholder="<?php echo $i18n_message; ?>" required></textarea>
                   </label>
                   <div class="field-error" style="display: none"></div>
                 </div>
