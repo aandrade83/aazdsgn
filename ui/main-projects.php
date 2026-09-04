@@ -9,7 +9,12 @@
       <article class="article">
         <header class="article__header">
           <div class="container">
-            <h1 class="article__heading heading heading--size-large"><?php echo $lang === '_en' ? 'Projects' : 'Proyectos'; ?></h1>
+            <h1 class="article__heading heading heading--size-large"><?php echo $lang === '_en' ? 'Architecture projects in Costa Rica' : 'Proyectos de arquitectura en Costa Rica'; ?></h1>
+            <p class="article__header-text" style="max-width: 900px; margin: 50px auto 32px; text-align: justify; font-size: 18px; line-height: 1.7;">
+              <?php echo $lang === '_en'
+                ? 'At <span class="color-yellow">AAZ DSGN</span>, we develop architecture, design, remodeling, and construction projects in Costa Rica, integrating aesthetics, functionality, and a strong connection with the surroundings. This selection brings together residential projects, terraces, remodels, and spaces designed around each client’s real needs, carefully guiding every stage from concept to execution.'
+                : 'En <span class="color-yellow">AAZ DSGN</span> desarrollamos proyectos de arquitectura, diseño, remodelación y construcción en Costa Rica, integrando estética, funcionalidad y conexión con el entorno. Esta selección reúne proyectos residenciales, terrazas, remodelaciones y espacios diseñados para responder a las necesidades reales de cada cliente, cuidando cada etapa desde el concepto hasta la ejecución.'; ?>
+            </p>
             <!-- Filter projects-->
             <div class="article__filter filter">
               <button class="filter__item filter__item--active __js_filter-btn" data-idcat="0" type="button" data-filter="*">all</button>

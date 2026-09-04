@@ -17,3 +17,9 @@ V01/LogFile.txt
 *.sql.gz
 
 _unused_review/
+
+V01/utilities/google-reviews/private/refresh-token.json
+V01/utilities/google-reviews/private/.refresh-token.tmp-*
+deploy/aazdsgn-production-*/
+deploy/*.zip
+

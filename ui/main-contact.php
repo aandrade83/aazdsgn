@@ -73,6 +73,12 @@
                   $i18n_subject = $lang === '_en' ? 'Subject' : 'Asunto';
                   $i18n_message = $lang === '_en' ? 'Message*' : 'Mensaje*';
                 ?>
+                <input type="hidden" name="lang" value="<?php echo $lang; ?>">
+                <input type="hidden" name="ts" value="<?php echo time(); ?>">
+                <div class="field-wrapper--hp" aria-hidden="true" style="position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden;">
+                  <label for="contact-company">Company</label>
+                  <input type="text" id="contact-company" name="company" tabindex="-1" autocomplete="off">
+                </div>
                 <div class="feedback__field-wrapper col-12 col-md-6 col-lg-4" data-aos="fade">
                   <label class="field" for="contact-name" aria-label="<?php echo $i18n_name; ?>">
                     <input id="contact-name" type="text" name="name" placeholder="<?php echo $i18n_name; ?>">

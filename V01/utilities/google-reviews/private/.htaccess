@@ -1,0 +1,8 @@
+# Defense in depth: deny all HTTP access to this folder,
+# regardless of the root .htaccess rules.
+Require all denied
+
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

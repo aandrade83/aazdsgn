@@ -49,6 +49,15 @@ error_log("Request URI: " . $requestUri);
   <meta name="twitter:image" content="<?php echo $og_image; ?>">
   <link href="<?php echo $base_url; ?>/V01/assets/libs/sweetalert2/sweetalert2.min.css?v=<?php echo $v;?>"/>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BB40C08NFL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-BB40C08NFL');
+  </script>
 </head>
 
 <script type="application/ld+json">
