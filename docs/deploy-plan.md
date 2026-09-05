@@ -8,6 +8,8 @@ Este documento es solo planificación. No se modificó código ni se hizo commit
 
 ---
 
+# LEER
+
 ## 1. Archivos de código que deben subirse
 
 Todo el árbol del proyecto **excepto** lo listado en la sección 2. En concreto, esto incluye:
@@ -22,22 +24,23 @@ Todo el árbol del proyecto **excepto** lo listado en la sección 2. En concreto
 
 ## 2. Archivos que NO deben subirse
 
-| Archivo/carpeta | Motivo |
-|---|---|
-| `.env` (el local) | Contiene credenciales de desarrollo (`DB_PASS`, `RESEND_API_KEY`, etc.). Producción necesita su **propio** `.env` con valores distintos (sección 5). |
-| `.git/` | Repositorio completo con historial — nunca debe quedar accesible en el document root público. |
-| `docker-compose.yml`, `Dockerfile` | Son para el entorno de desarrollo local (Docker). Solo aplican si producción también corre en Docker con esta misma composición; si el hosting es Apache/Plesk tradicional, no tienen función y no deben subirse. **A confirmar con el proveedor de hosting antes de decidir.** |
-| `V01/LogFile.txt` | Log de debug temporal (ya vaciado y sacado del tracking de git). No debe subirse con contenido, y si se sube el archivo vacío, debe quedar bloqueado por `.htaccess` igual que en local (ya cubierto por el bloqueo de `*.log`... nota: el nombre real es `.txt`, no `.log` — ver sección 8, riesgo a revisar). |
-| `*.sql`, `*.sql.gz`, dumps de base de datos | Nunca deben quedar en el document root público. |
-| `docs/` (`audit-pre-prod.md`, `deploy-plan.md`, etc.) | Documentación interna — ya está bloqueada por `.htaccess` (`RewriteRule ^docs/ - [F,L]`), pero si se prefiere no publicarla en absoluto, lo más limpio es no subir la carpeta al servidor de producción. |
-| `_unused_review/` | Carpeta de backups/versiones viejas (HTML/PHP de prueba, incluye un `.zip`) — no debe subirse; no aporta nada a producción y es superficie de riesgo. |
-| `test.php` (raíz) | Archivo de prueba con una URL hardcodeada de ejemplo — no tiene función en producción, no subir. |
-| `.DS_Store`, `Thumbs.db`, `*.lnk`, `.idea/`, `.vscode/` | Basura de sistema operativo/editor, sin función. |
-| `.claude/` | Configuración de este asistente — no tiene función en el servidor. |
+| Archivo/carpeta                                         | Motivo                                                                                                                                                                                                                                                                                                          |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.env` (el local)                                       | Contiene credenciales de desarrollo (`DB_PASS`, `RESEND_API_KEY`, etc.). Producción necesita su **propio** `.env` con valores distintos (sección 5).                                                                                                                                                            |
+| `.git/`                                                 | Repositorio completo con historial — nunca debe quedar accesible en el document root público.                                                                                                                                                                                                                   |
+| `docker-compose.yml`, `Dockerfile`                      | Son para el entorno de desarrollo local (Docker). Solo aplican si producción también corre en Docker con esta misma composición; si el hosting es Apache/Plesk tradicional, no tienen función y no deben subirse. **A confirmar con el proveedor de hosting antes de decidir.**                                 |
+| `V01/LogFile.txt`                                       | Log de debug temporal (ya vaciado y sacado del tracking de git). No debe subirse con contenido, y si se sube el archivo vacío, debe quedar bloqueado por `.htaccess` igual que en local (ya cubierto por el bloqueo de `*.log`... nota: el nombre real es `.txt`, no `.log` — ver sección 8, riesgo a revisar). |
+| `*.sql`, `*.sql.gz`, dumps de base de datos             | Nunca deben quedar en el document root público.                                                                                                                                                                                                                                                                 |
+| `docs/` (`audit-pre-prod.md`, `deploy-plan.md`, etc.)   | Documentación interna — ya está bloqueada por `.htaccess` (`RewriteRule ^docs/ - [F,L]`), pero si se prefiere no publicarla en absoluto, lo más limpio es no subir la carpeta al servidor de producción.                                                                                                        |
+| `_unused_review/`                                       | Carpeta de backups/versiones viejas (HTML/PHP de prueba, incluye un `.zip`) — no debe subirse; no aporta nada a producción y es superficie de riesgo.                                                                                                                                                           |
+| `test.php` (raíz)                                       | Archivo de prueba con una URL hardcodeada de ejemplo — no tiene función en producción, no subir.                                                                                                                                                                                                                |
+| `.DS_Store`, `Thumbs.db`, `*.lnk`, `.idea/`, `.vscode/` | Basura de sistema operativo/editor, sin función.                                                                                                                                                                                                                                                                |
+| `.claude/`                                              | Configuración de este asistente — no tiene función en el servidor.                                                                                                                                                                                                                                              |
 
 ## 3. `.htaccess`
 
 **Sí debe subirse.** Es el que implementa:
+
 - Bloqueo de dotfiles, `.git`, `docker-compose.yml`/`Dockerfile`, extensiones sensibles (`.sql`, `.zip`, `.rar`, `.bak`, `.log`).
 - Bloqueo de `/V01/utilities/`, `/ui/`, `/docs/`, `/_unused_review/`, `/.claude/`.
 - Bloqueo de `/process/` salvo `mail.php` y `action.php`.
@@ -50,6 +53,7 @@ Sin este archivo, el sitio en producción serviría URLs `.php` sin redirigir, e
 ## 4. `sitemap.xml` y `robots.txt`
 
 **Ambos deben subirse tal cual están en local.** Ya usan URLs absolutas a `https://aazdsgn.com` (no `localhost`), confirmado en la revisión anterior:
+
 - `sitemap.xml`: 35 URLs limpias, sin `.php`.
 - `robots.txt`: declara `Sitemap: https://aazdsgn.com/sitemap.xml` y bloquea solo carpetas internas.
 
@@ -72,6 +76,7 @@ CONTACT_FROM="AAZ DSGN Website <contact@aazdsgn.com>"
 ```
 
 Notas:
+
 - `DB_HOST`/`DB_USER`/`DB_PASS`/`DB_NAME` deben ser las credenciales **reales de producción**, provistas por el hosting — nunca las de `db`/`dev_aazdsgn` que usa Docker local.
 - `RESEND_API_KEY` — usar la key de producción de Resend (puede ser la misma que en local si la cuenta de Resend es la misma, pero confirmar que el dominio `aazdsgn.com` esté verificado en Resend antes del deploy, o los correos no saldrán).
 - `CONTACT_FROM` debe usar un remitente `@aazdsgn.com` verificado en Resend (SPF/DKIM configurados), si no, Resend puede rechazar o marcar como spam los envíos.
@@ -170,11 +175,13 @@ Con `curl` o navegador, contra `https://aazdsgn.com`:
 ## 11. Riesgos y plan de rollback
 
 **Antes de tocar producción:**
+
 - [ ] Backup completo de archivos actuales de producción (si ya existe un sitio en `aazdsgn.com`, aunque sea el legacy) — comprimir el document root completo con fecha en el nombre.
 - [ ] Backup de la base de datos de producción actual: `mysqldump -u [user] -p [database] > backup_aazdsgn_pre_deploy_2026-08-11.sql` (ejecutar esto y guardarlo en un lugar seguro **fuera** del document root público).
 - [ ] Confirmar que se tiene acceso de rollback (FTP/SSH y panel de hosting) antes de empezar, para no quedar bloqueado si algo falla.
 
 **Si algo falla después del deploy:**
+
 - **Archivos rotos / sitio caído**: restaurar el backup de archivos tomado en el paso anterior; investigar en un entorno de staging antes de reintentar.
 - **`.htaccess` mal interpretado por el hosting** (sitio muestra error 500 general): renombrar temporalmente `.htaccess` a `.htaccess.disabled` vía FTP/SSH para restaurar el acceso mientras se diagnostica, y luego revisar la sección 8 de este documento (`AllowOverride`, nginx-proxy).
 - **Formulario de contacto no envía correos**: verificar `.env` de producción (paso 5) y que el dominio `aazdsgn.com` esté verificado en Resend — no es un problema de código si `/contact` carga bien pero el envío falla.
