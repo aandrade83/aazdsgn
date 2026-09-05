@@ -79,7 +79,7 @@ function google_reviews_strip_resource_prefix(string $value, string $prefix): st
     $value = trim($value);
     $prefixWithSlash = rtrim($prefix, '/') . '/';
 
-    if (str_starts_with($value, $prefixWithSlash)) {
+    if (strpos($value, $prefixWithSlash) === 0) {
         return substr($value, strlen($prefixWithSlash));
     }
 
