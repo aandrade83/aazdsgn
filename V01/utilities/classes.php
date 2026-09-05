@@ -227,6 +227,28 @@ class _Visitas{
     }
 }
 
+class _Google_reviews {
+
+    var $vars = array();
+    function initial(){}
+    function update($specific = NULL){
+         db_connect("master");
+       return update($this, "google_reviews", $specific);
+    }
+    function insert(){
+          db_connect("master");
+        $this->vars["id"] = insert($this, "google_reviews");
+        //  return insert_test($this, "visitas");
+    }
+    function delete(){
+          db_connect("master");
+       delete("google_reviews", $this->vars["id"]);
+    }
+}
+
+
+
+
 
 
 

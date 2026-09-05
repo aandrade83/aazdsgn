@@ -181,8 +181,25 @@ function get_all_leagues($companie,$available = "-1"){
 function get_league($id){
 	db_connect("master");
 	$sql = "SELECT * FROM leagues WHERE id = '".$id."'";
-	return get($sql,'_Leagues',true); 
-   
+	return get($sql,'_Leagues',true);
+
+}
+
+
+
+
+function get_google_reviews_by_review_id_index(){
+
+	db_connect("master");
+	$sql = "SELECT * FROM google_reviews";
+	return get($sql,'_Google_reviews',false,'review_id');
+}
+
+function get_google_review_by_review_id($reviewId){
+
+	db_connect("master");
+	$sql = "SELECT * FROM google_reviews WHERE review_id = '".$reviewId."'";
+	return get($sql,'_Google_reviews',true);
 }
 
 ?>

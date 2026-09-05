@@ -317,14 +317,22 @@ function google_reviews_list_locations(string $accessToken, string $accountResou
  * resource names separately, so they must be joined here, not assumed).
  * Follows nextPageToken until exhausted.
  *
+ * Optionally captures response-level metadata from the FIRST page only
+ * (Google's documented ListReviewsResponse fields: averageRating and
+ * totalReviewCount, plus whether that first page carried a nextPageToken)
+ * into $meta, if a variable is passed by reference. This is diagnostic
+ * metadata about Google's own response, not a persisted value.
+ *
+ * @param array{averageRating?: float|int|null, totalReviewCount?: int|null, first_page_had_next_page_token?: bool}|null $meta
  * @return array<int, array<string, mixed>> Raw "review" objects from the API.
  */
-function google_reviews_list_reviews(string $accessToken, string $accountResourceName, string $locationResourceName): array
+function google_reviews_list_reviews(string $accessToken, string $accountResourceName, string $locationResourceName, ?array &$meta = null): array
 {
     $parent = google_reviews_build_location_parent($accountResourceName, $locationResourceName);
 
     $reviews   = [];
     $pageToken = null;
+    $isFirstPage = true;
 
     do {
         $query = ['pageSize' => 50];
@@ -337,6 +345,15 @@ function google_reviews_list_reviews(string $accessToken, string $accountResourc
 
         $response = google_reviews_http_get($url, $accessToken);
 
+        if ($isFirstPage) {
+            $meta = [
+                'averageRating'                   => $response['averageRating'] ?? null,
+                'totalReviewCount'                => $response['totalReviewCount'] ?? null,
+                'first_page_had_next_page_token'  => !empty($response['nextPageToken']),
+            ];
+            $isFirstPage = false;
+        }
+
         foreach ($response['reviews'] ?? [] as $review) {
             $reviews[] = $review;
         }
@@ -345,4 +362,46 @@ function google_reviews_list_reviews(string $accessToken, string $accountResourc
     } while ($pageToken !== null && $pageToken !== '');
 
     return $reviews;
+}
+
+/**
+ * Conservatively splits a Google review "comment" into an original-language
+ * part and a Google-translated part, based on the literal marker
+ * "(Translated by Google)" that Google inserts into the plain-text comment
+ * field for reviews it auto-translated. This marker format is NOT part of
+ * the official API schema (the API only documents "comment" as plain
+ * text) — it is an observed convention in the actual comment content, so
+ * this parser is intentionally conservative: if the marker isn't found
+ * verbatim, the whole comment is treated as untranslated original text.
+ *
+ * Never guesses a language: original_language is always null, since
+ * neither the API nor this marker reliably identifies the source language.
+ *
+ * @return array{comment_original: string, comment_google_translation: ?string, has_google_translation: bool, original_language: null}
+ */
+function google_reviews_parse_comment(?string $comment): array
+{
+    $comment = $comment ?? '';
+    $marker  = '(Translated by Google)';
+
+    $markerPos = strpos($comment, $marker);
+
+    if ($markerPos === false) {
+        return [
+            'comment_original'            => trim($comment),
+            'comment_google_translation'  => null,
+            'has_google_translation'      => false,
+            'original_language'           => null,
+        ];
+    }
+
+    $original    = trim(substr($comment, 0, $markerPos));
+    $translation = trim(substr($comment, $markerPos + strlen($marker)));
+
+    return [
+        'comment_original'            => $original,
+        'comment_google_translation'  => $translation !== '' ? $translation : null,
+        'has_google_translation'      => true,
+        'original_language'           => null,
+    ];
 }

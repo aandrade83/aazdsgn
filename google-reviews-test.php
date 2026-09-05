@@ -96,6 +96,51 @@ try {
 $requestedAccount  = isset($_GET['account']) && is_string($_GET['account']) ? trim($_GET['account']) : '';
 $requestedLocation = isset($_GET['location']) && is_string($_GET['location']) ? trim($_GET['location']) : '';
 
+/**
+ * Prints only non-sensitive review metadata and per-review fields.
+ * Never prints tokens, headers, or the raw comment translation marker
+ * parsing result beyond what was explicitly requested for this diagnostic.
+ *
+ * @param array<int, array<string, mixed>> $reviews
+ * @param array{averageRating?: mixed, totalReviewCount?: mixed, first_page_had_next_page_token?: bool}|null $meta
+ */
+function google_reviews_test_print_reviews(array $reviews, ?array $meta): void
+{
+    echo "=== Reviews — response metadata (first page) ===\n";
+    echo 'totalReviewCount: ' . (isset($meta['totalReviewCount']) && $meta['totalReviewCount'] !== null ? $meta['totalReviewCount'] : '(not present in response)') . "\n";
+    echo 'averageRating: ' . (isset($meta['averageRating']) && $meta['averageRating'] !== null ? $meta['averageRating'] : '(not present in response)') . "\n";
+    echo 'nextPageToken present on first page: ' . (!empty($meta['first_page_had_next_page_token']) ? 'yes' : 'no') . "\n";
+    echo 'reviews fetched after following all pages: ' . count($reviews) . "\n\n";
+
+    foreach ($reviews as $i => $review) {
+        $resourceName = $review['name'] ?? ($review['reviewId'] ?? '(none)');
+        $displayName  = $review['reviewer']['displayName'] ?? '(no name)';
+        $starRating   = $review['starRating'] ?? '(none)';
+        $createTime   = $review['createTime'] ?? '(none)';
+        $updateTime   = $review['updateTime'] ?? '(none)';
+        $hasComment   = isset($review['comment']) && $review['comment'] !== '';
+
+        echo '--- review #' . ($i + 1) . " ---\n";
+        echo 'name/reviewId: ' . $resourceName . "\n";
+        echo 'reviewer.displayName: ' . $displayName . "\n";
+        echo 'starRating: ' . $starRating . "\n";
+        echo 'createTime: ' . $createTime . "\n";
+        echo 'updateTime: ' . $updateTime . "\n";
+        echo 'comment_present: ' . ($hasComment ? 'yes' : 'no') . "\n";
+
+        if ($hasComment) {
+            $parsed = google_reviews_parse_comment($review['comment']);
+            echo 'has_google_translation: ' . ($parsed['has_google_translation'] ? 'yes' : 'no') . "\n";
+            echo 'original_language: ' . ($parsed['original_language'] ?? '(null — not guessed)') . "\n";
+            echo "comment_original:\n" . $parsed['comment_original'] . "\n";
+            if ($parsed['has_google_translation']) {
+                echo "comment_google_translation:\n" . $parsed['comment_google_translation'] . "\n";
+            }
+        }
+        echo "\n";
+    }
+}
+
 // --- Path 1: a specific location was given -> go straight to reviews ---
 if ($requestedLocation !== '') {
     echo "=== Location (from ?location=) ===\n";
@@ -110,29 +155,13 @@ if ($requestedLocation !== '') {
         // parent, google_reviews_build_location_parent() uses it as-is and
         // $requestedAccount (possibly empty) is ignored; otherwise both are
         // required to build the parent.
-        $reviews = google_reviews_list_reviews($accessToken, $requestedAccount, $requestedLocation);
+        $reviewsMeta = null;
+        $reviews = google_reviews_list_reviews($accessToken, $requestedAccount, $requestedLocation, $reviewsMeta);
     } catch (Throwable $e) {
         google_reviews_test_log_and_fail('reviews', $e);
     }
 
-    echo "=== Reviews ===\n";
-    echo 'total_fetched: ' . count($reviews) . "\n\n";
-
-    foreach ($reviews as $i => $review) {
-        $displayName = $review['reviewer']['displayName'] ?? '(no name)';
-        $starRating  = $review['starRating'] ?? '(none)';
-        $createTime  = $review['createTime'] ?? '(none)';
-        $updateTime  = $review['updateTime'] ?? '(none)';
-        $comment     = $review['comment'] ?? '';
-
-        echo '--- review #' . ($i + 1) . " ---\n";
-        echo 'reviewer.displayName: ' . $displayName . "\n";
-        echo 'starRating: ' . $starRating . "\n";
-        echo 'createTime: ' . $createTime . "\n";
-        echo 'updateTime: ' . $updateTime . "\n";
-        echo "comment:\n" . $comment . "\n\n";
-    }
-
+    google_reviews_test_print_reviews($reviews, $reviewsMeta);
     exit;
 }
 
@@ -212,25 +241,10 @@ echo 'title: ' . ($location['title'] ?? '(unknown)') . "\n\n";
 unset($location, $locations);
 
 try {
-    $reviews = google_reviews_list_reviews($accessToken, $accountResourceName, $locationResourceName);
+    $reviewsMeta = null;
+    $reviews = google_reviews_list_reviews($accessToken, $accountResourceName, $locationResourceName, $reviewsMeta);
 } catch (Throwable $e) {
     google_reviews_test_log_and_fail('reviews', $e);
 }
 
-echo "=== Reviews ===\n";
-echo 'total_fetched: ' . count($reviews) . "\n\n";
-
-foreach ($reviews as $i => $review) {
-    $displayName = $review['reviewer']['displayName'] ?? '(no name)';
-    $starRating  = $review['starRating'] ?? '(none)';
-    $createTime  = $review['createTime'] ?? '(none)';
-    $updateTime  = $review['updateTime'] ?? '(none)';
-    $comment     = $review['comment'] ?? '';
-
-    echo '--- review #' . ($i + 1) . " ---\n";
-    echo 'reviewer.displayName: ' . $displayName . "\n";
-    echo 'starRating: ' . $starRating . "\n";
-    echo 'createTime: ' . $createTime . "\n";
-    echo 'updateTime: ' . $updateTime . "\n";
-    echo "comment:\n" . $comment . "\n\n";
-}
+google_reviews_test_print_reviews($reviews, $reviewsMeta);
