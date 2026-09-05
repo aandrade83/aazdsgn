@@ -14,9 +14,10 @@
  *                                                         single account was
  *                                                         auto-selected)
  *   &account=accounts/XXXX                            -> use this account
- *   &location=accounts/XXXX/locations/YYYY            -> use this location,
- *                                                         skip straight to
- *                                                         reviews
+ *   &location=accounts/XXXX/locations/YYYY            -> use this location
+ *   &location=locations/YYYY (with &account=accounts/XXXX) -> also accepted
+ *                                                         both skip straight
+ *                                                         to reviews
  *
  * DELETE THIS FILE once Phase 2 is validated.
  */
@@ -51,6 +52,30 @@ function google_reviews_test_fail(string $message): void
     exit;
 }
 
+/**
+ * Logs safe diagnostic details for a failed Business Profile API call
+ * (HTTP status, sanitized URL, Google's error.status/error.message) and
+ * always shows the caller only a generic message — never Google's raw
+ * error text, and never any token/Authorization header.
+ */
+function google_reviews_test_log_and_fail(string $context, Throwable $e): void
+{
+    if ($e instanceof GoogleReviewsApiException) {
+        error_log(sprintf(
+            '[google-reviews-test] %s failed | http_status=%d | url=%s | api_error_status=%s | api_error_message=%s',
+            $context,
+            $e->getHttpStatus(),
+            $e->getSanitizedUrl(),
+            $e->getApiErrorStatus() ?? '(none)',
+            $e->getApiErrorMessage() ?? '(none)'
+        ));
+    } else {
+        error_log('[google-reviews-test] ' . $context . ' failed (' . get_class($e) . ')');
+    }
+
+    google_reviews_test_fail('Could not list ' . $context . '. Check server logs.');
+}
+
 try {
     $accessToken = google_reviews_get_access_token();
 } catch (Throwable $e) {
@@ -64,13 +89,20 @@ $requestedLocation = isset($_GET['location']) && is_string($_GET['location']) ? 
 // --- Path 1: a specific location was given -> go straight to reviews ---
 if ($requestedLocation !== '') {
     echo "=== Location (from ?location=) ===\n";
-    echo $requestedLocation . "\n\n";
+    echo $requestedLocation . "\n";
+    if ($requestedAccount !== '') {
+        echo 'account (from ?account=): ' . $requestedAccount . "\n";
+    }
+    echo "\n";
 
     try {
-        $reviews = google_reviews_list_reviews($accessToken, $requestedLocation);
+        // If $requestedLocation is already a full "accounts/X/locations/Y"
+        // parent, google_reviews_build_location_parent() uses it as-is and
+        // $requestedAccount (possibly empty) is ignored; otherwise both are
+        // required to build the parent.
+        $reviews = google_reviews_list_reviews($accessToken, $requestedAccount, $requestedLocation);
     } catch (Throwable $e) {
-        error_log('[google-reviews-test] reviews.list failed (' . get_class($e) . ')');
-        google_reviews_test_fail('Could not list reviews for this location. Check server logs.');
+        google_reviews_test_log_and_fail('reviews', $e);
     }
 
     echo "=== Reviews ===\n";
@@ -99,8 +131,7 @@ if ($requestedLocation !== '') {
 try {
     $accounts = google_reviews_list_accounts($accessToken);
 } catch (Throwable $e) {
-    error_log('[google-reviews-test] accounts.list failed (' . get_class($e) . ')');
-    google_reviews_test_fail('Could not list accounts. Check server logs.');
+    google_reviews_test_log_and_fail('accounts', $e);
 }
 
 if (empty($accounts)) {
@@ -142,8 +173,7 @@ unset($selectedAccount, $accounts);
 try {
     $locations = google_reviews_list_locations($accessToken, $accountResourceName);
 } catch (Throwable $e) {
-    error_log('[google-reviews-test] locations.list failed (' . get_class($e) . ')');
-    google_reviews_test_fail('Could not list locations for this account. Check server logs.');
+    google_reviews_test_log_and_fail('locations', $e);
 }
 
 if (empty($locations)) {
@@ -172,10 +202,9 @@ echo 'title: ' . ($location['title'] ?? '(unknown)') . "\n\n";
 unset($location, $locations);
 
 try {
-    $reviews = google_reviews_list_reviews($accessToken, $locationResourceName);
+    $reviews = google_reviews_list_reviews($accessToken, $accountResourceName, $locationResourceName);
 } catch (Throwable $e) {
-    error_log('[google-reviews-test] reviews.list failed (' . get_class($e) . ')');
-    google_reviews_test_fail('Could not list reviews for this location. Check server logs.');
+    google_reviews_test_log_and_fail('reviews', $e);
 }
 
 echo "=== Reviews ===\n";
