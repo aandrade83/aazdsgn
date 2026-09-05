@@ -73,6 +73,16 @@ function google_reviews_test_log_and_fail(string $context, Throwable $e): void
         error_log('[google-reviews-test] ' . $context . ' failed (' . get_class($e) . ')');
     }
 
+    if ($e instanceof GoogleReviewsApiException) {
+        http_response_code(500);
+        echo "ERROR calling Google Business Profile " . ucfirst($context) . " API\n";
+        echo 'HTTP status: ' . $e->getHttpStatus() . "\n";
+        echo 'URL: ' . $e->getSanitizedUrl() . "\n";
+        echo 'Google status: ' . ($e->getApiErrorStatus() ?? '(none)') . "\n";
+        echo 'Google message: ' . ($e->getApiErrorMessage() ?? '(none)') . "\n";
+        exit;
+    }
+
     google_reviews_test_fail('Could not list ' . $context . '. Check server logs.');
 }
 
