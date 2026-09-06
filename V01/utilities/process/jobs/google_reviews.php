@@ -27,7 +27,7 @@ if (PHP_SAPI === 'cli') {
     if (!isset($_SERVER['SERVER_NAME'])) { $_SERVER['SERVER_NAME'] = 'www.aazdsgn.com'; }
     if (!isset($_SERVER['SERVER_PORT'])) { $_SERVER['SERVER_PORT'] = '443'; }
     if (!isset($_SERVER['HTTPS']))       { $_SERVER['HTTPS']       = 'on'; }
-    if (!isset($_SERVER['REQUEST_URI']))       { $_SERVER['HTTPS']       = '/V01/utilities/process/jobs/google_reviews.php'; }
+    if (!isset($_SERVER['REQUEST_URI']))  { $_SERVER['REQUEST_URI']  = '/V01/utilities/process/jobs/google_reviews.php'; }
 }
 
 require_once($_SERVER['DOCUMENT_ROOT']."/V01/utilities/includes.php");
