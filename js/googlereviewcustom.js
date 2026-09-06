@@ -65,6 +65,28 @@
 		}
 	}
 
+	// Fallback safety net: main.js's own __js_fixed-footer logic (window
+	// load/resize) is supposed to reserve this space already, but in
+	// practice it hasn't been reliably picking up this section's real
+	// height. Rather than fight that mechanism, this only ever RAISES
+	// body's padding-bottom to at least the real footer height — it never
+	// lowers whatever main.js already set, so it can't conflict with it.
+	function ensureFooterSpace() {
+		var footer = document.querySelector('.__js_fixed-footer');
+		if (!footer) return;
+
+		var isFixed = window.getComputedStyle(footer).position === 'fixed';
+		if (!isFixed) return;
+
+		var footerHeight = footer.offsetHeight;
+		var body = document.body;
+		var currentPadding = parseFloat(window.getComputedStyle(body).paddingBottom) || 0;
+
+		if (currentPadding < footerHeight) {
+			body.style.paddingBottom = footerHeight + 'px';
+		}
+	}
+
 	function initExpandToggles() {
 		var toggles = document.querySelectorAll('.__js_google-review-toggle');
 		toggles.forEach(function (btn) {
@@ -84,13 +106,34 @@
 				btn.textContent = expanded
 					? btn.getAttribute('data-label-less')
 					: btn.getAttribute('data-label-more');
+
+				// Wait a frame so the new height is applied before recalculating
+				// the fixed-footer's reserved space (same mechanism as above).
+				requestAnimationFrame(function () {
+					$(window).trigger('resize');
+					ensureFooterSpace();
+				});
 			});
 		});
 	}
 
 	document.addEventListener('DOMContentLoaded', function () {
-		initCarousel();
 		// Let layout settle (fonts/images) before measuring clamped height.
 		window.setTimeout(initExpandToggles, 50);
 	});
+
+	// main.js's __js_fixed-footer padding-bottom reservation (and its own
+	// resize listener) is set up inside its own $(window).on('load', ...)
+	// callback. Since main.js's <script> tag runs before this one, its load
+	// handler is registered first and therefore fires before ours — so
+	// initializing the carousel here (instead of on DOMContentLoaded) and
+	// then triggering resize is guaranteed to land after that listener
+	// already exists, making the trigger actually recalculate the space.
+	$(window).on('load', function () {
+		initCarousel();
+		$(window).trigger('resize');
+		ensureFooterSpace();
+	});
+
+	window.addEventListener('resize', ensureFooterSpace);
 })();

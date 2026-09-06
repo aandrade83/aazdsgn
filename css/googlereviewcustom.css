@@ -1,6 +1,11 @@
 /* Google Reviews carousel — scoped to .google-reviews */
 
 .google-reviews {
+  /* Matches main's existing position:relative + z-index:1 (main.css) so this
+     section stacks like normal page content above the always-fixed footer,
+     instead of competing with it at the same (auto) stacking level. */
+  position: relative;
+  z-index: 1;
   padding: 64px 0;
   background-color: #ffffff;
   overflow: hidden;
