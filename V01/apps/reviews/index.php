@@ -63,11 +63,13 @@ $reviews = get_google_reviews_for_manager();
 
                                                 $comment = trim((string) ($review->vars['comment_original'] ?? ''));
                                                 $comment_preview = $comment !== '' ? text_preview($comment, 100) : 'Sin comentario';
-                                                $comment_safe = htmlspecialchars($comment_preview, ENT_QUOTES, 'UTF-8');
+                                                $comment_safe = htmlspecialchars($comment_preview, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
                                                 $show_review = (int) ($review->vars['show_review'] ?? 0);
                                                 $review_id_safe = htmlspecialchars((string) ($review->vars['review_id'] ?? ''), ENT_QUOTES, 'UTF-8');
-                                                ?>
+                                                
+                                               
+                                               ?>
                                                 <tr data-review-id="<? echo $review_id_safe; ?>">
                                                     <td><? echo $name; ?></td>
                                                     <td><? echo $date_safe; ?></td>

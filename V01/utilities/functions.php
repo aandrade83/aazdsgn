@@ -424,13 +424,24 @@ function param($name, $secured = true){
 /////////////////////////////////////////
 /////////////////////////////////////////
 
-
+/*
 function text_preview($text, $num, $tags = ''){
 	$text = strip_tags($text,$tags);
 	if(strlen($text) > $num){
 		$text = substr($text,0,$num) . "...";
 	}
 	return $text;
+}*/
+
+function text_preview($text, $num, $tags = ''){
+
+    $text = strip_tags($text, $tags);
+
+    if (mb_strlen($text, 'UTF-8') > $num) {
+        $text = mb_substr($text, 0, $num, 'UTF-8') . "...";
+    }
+
+    return $text;
 }
 
 
