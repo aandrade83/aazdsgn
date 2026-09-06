@@ -1,0 +1,9 @@
+.editable {
+    cursor: pointer;
+}
+
+.edit-btn, .save-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}

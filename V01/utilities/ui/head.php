@@ -180,7 +180,8 @@
                                         <a href="<?php echo $base_url; ?>/V01/apps/mainPage/index.php" class="dropdown-item">Pagina Principal</a>
                                         <a href="<?php echo $base_url; ?>/V01/apps/projects/index.php" class="dropdown-item">Proyectos</a>
                                          <a href="<?php echo $base_url; ?>/V01/apps/services/index.php" class="dropdown-item">Servicios</a>
-                          
+                                        <a href="<?php echo $base_url; ?>/V01/apps/reviews/index.php" class="dropdown-item">Reviews</a>
+
                                         <a href="<?php echo $base_url; ?>/V01/apps/about/index.php" class="dropdown-item">Conozcanos</a>
                                         <a href="dashboard-4.html" class="dropdown-item">Footer</a>
                                     </div>

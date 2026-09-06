@@ -73,6 +73,9 @@
                                         <a href="<?php echo $base_url; ?>/V01/apps/services/index.php">Servicios</a>
                                     </li>
                                     <li>
+                                        <a href="<?php echo $base_url; ?>/V01/apps/reviews/index.php">Reviews</a>
+                                    </li>
+                                    <li>
                                         <a href="<?php echo $base_url; ?>/V01/apps/leagues/">Footer</a>
                                     </li>
                                     
