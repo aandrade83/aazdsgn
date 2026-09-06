@@ -15,6 +15,19 @@ if (empty($_SERVER['DOCUMENT_ROOT'])) {
     $_SERVER['DOCUMENT_ROOT'] = dirname(__DIR__, 4);
 }
 
+/**
+ * vars.php and functions.php (curPageURL(), called from db/manager.php on
+ * every insert()/update()) assume a web request and read these unchecked,
+ * which warns under CLI. isset-guarded so a real request context (if this
+ * were ever included another way) is never overridden.
+ */
+if (PHP_SAPI === 'cli') {
+    if (!isset($_SERVER['HTTP_HOST']))   { $_SERVER['HTTP_HOST']   = 'www.aazdsgn.com'; }
+    if (!isset($_SERVER['SERVER_NAME'])) { $_SERVER['SERVER_NAME'] = 'www.aazdsgn.com'; }
+    if (!isset($_SERVER['SERVER_PORT'])) { $_SERVER['SERVER_PORT'] = '443'; }
+    if (!isset($_SERVER['HTTPS']))       { $_SERVER['HTTPS']       = 'on'; }
+}
+
 require_once($_SERVER['DOCUMENT_ROOT']."/V01/utilities/includes.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/V01/utilities/google-reviews/api-client.php");
 
