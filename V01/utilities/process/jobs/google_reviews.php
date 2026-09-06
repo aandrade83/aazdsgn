@@ -15,6 +15,7 @@ if (empty($_SERVER['DOCUMENT_ROOT'])) {
     $_SERVER['DOCUMENT_ROOT'] = dirname(__DIR__, 4);
 }
 
+
 /**
  * vars.php and functions.php (curPageURL(), called from db/manager.php on
  * every insert()/update()) assume a web request and read these unchecked,
@@ -26,6 +27,7 @@ if (PHP_SAPI === 'cli') {
     if (!isset($_SERVER['SERVER_NAME'])) { $_SERVER['SERVER_NAME'] = 'www.aazdsgn.com'; }
     if (!isset($_SERVER['SERVER_PORT'])) { $_SERVER['SERVER_PORT'] = '443'; }
     if (!isset($_SERVER['HTTPS']))       { $_SERVER['HTTPS']       = 'on'; }
+    if (!isset($_SERVER['REQUEST_URI']))       { $_SERVER['HTTPS']       = '/V01/utilities/process/jobs/google_reviews.php'; }
 }
 
 require_once($_SERVER['DOCUMENT_ROOT']."/V01/utilities/includes.php");
