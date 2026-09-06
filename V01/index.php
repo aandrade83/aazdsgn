@@ -29,11 +29,11 @@ require_once($_SERVER['DOCUMENT_ROOT']."/V01/utilities/includes.php");
         <form action="">
             <h1>AAZ DSGN MANAGER</h1>
             <div class="input-box">
-                <input type="text" id="user" placeholder="Username" required>
+                <input type="text" id="user" placeholder="Username" autocomplete="username" required>
                 <!-- <i class='bx bxs-user'></i> -->
             </div>
             <div class="input-box">
-                <input type="password" id="pass" placeholder="Password" required>
+                <input type="password" id="pass" placeholder="Password" autocomplete="current-password" required>
                 <!-- <i class='bx bxs-lock-alt'></i> -->
             </div>
 
