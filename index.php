@@ -11,5 +11,6 @@ $page_description = $lang === '_en'
 <? include ("./ui/home-video.php");?>
 <? include ("./ui/menu.php");?>
 <?  include ("./ui/main-page.php");?>
+<? include ("./ui/slicer-reviews.php"); ?>
 <? include ("./ui/footer.php"); ?>
 

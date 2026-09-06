@@ -202,4 +202,20 @@ function get_google_review_by_review_id($reviewId){
 	return get($sql,'_Google_reviews',true);
 }
 
+
+
+function get_google_reviews_by_review_id_index_show(){
+
+	db_connect("master");
+    $sql = "SELECT * 
+        FROM google_reviews 
+        WHERE show_review = 1
+          AND is_active = 1
+          AND raw_comment IS NOT NULL
+          AND TRIM(raw_comment) != ''
+        ORDER BY google_create_time DESC";
+	return get($sql,'_Google_reviews',false,'review_id');
+}
+
+
 ?>

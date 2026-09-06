@@ -20,6 +20,7 @@ error_log("Request URI: " . $requestUri);
   <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="<?php echo $base_url; ?>/css/bootstrap-grid.css">
   <link rel="stylesheet" href="<?php echo $base_url; ?>/css/main.css">
+  <link rel="stylesheet" href="<?php echo $base_url; ?>/css/googlereviewcustom.css">
   <?php
     $page_title       = isset($page_title) && $page_title !== '' ? $page_title : 'AAZDSGN - Arquitectura Creativa en Costa Rica';
     $page_description = isset($page_description) && $page_description !== '' ? $page_description : 'Estudio de arquitectura en Costa Rica especializado en diseño residencial, comercial y sostenible. Cotizá con expertos locales.';
